@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -37,8 +37,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+interface Entry {
+  name: string;
+  email: string;
+  company: string;
+  boid: string;
+  status: "Verified" | "Pending";
+}
+
 export function IpoResultTable() {
-  const [entries, setEntries] = useState([
+  const [entries, setEntries] = useState<Entry[]>([
     {
       name: "Liam Johnson",
       email: "liam@example.com",
@@ -69,7 +77,7 @@ export function IpoResultTable() {
     },
   ]);
 
-  const [newEntry, setNewEntry] = useState({
+  const [newEntry, setNewEntry] = useState<Entry>({
     name: "",
     email: "",
     company: "",
@@ -77,15 +85,15 @@ export function IpoResultTable() {
     status: "Pending",
   });
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewEntry({ ...newEntry, [e.target.name]: e.target.value });
   };
 
-  const handleStatusChange = (value) => {
+  const handleStatusChange = (value: "Verified" | "Pending") => {
     setNewEntry({ ...newEntry, status: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setEntries([...entries, newEntry]);
     setNewEntry({
@@ -131,7 +139,18 @@ export function IpoResultTable() {
                     className="col-span-3"
                   />
                 </div>
-
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="email" className="text-left">
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    value={newEntry.email}
+                    onChange={handleInputChange}
+                    className="col-span-3"
+                  />
+                </div>
                 <div className="flex flex-col gap-2">
                   <Label htmlFor="company" className="text-left">
                     Company

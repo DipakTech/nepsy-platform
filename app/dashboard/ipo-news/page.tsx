@@ -4,7 +4,8 @@ import PostList from "./post-list";
 import { GetNews } from "@/action/share-related-news";
 import React from "react";
 
-export function Container(props: {
+// Separate Container component
+function Container(props: {
   children: React.ReactNode;
   className?: string;
   large?: boolean;
@@ -31,7 +32,8 @@ export interface Post {
   imageUrl: string;
 }
 
-export default async function Post() {
+// Main page component
+export default async function PostPage() {
   const posts = await GetNews();
   return (
     <>
@@ -39,7 +41,7 @@ export default async function Post() {
         <Container>
           <div className="mt-10 grid gap-10 md:grid-cols-2 lg:gap-6 xl:grid-cols-3 ">
             {posts.map((post: Post) => (
-              <PostList key={Math.random()} post={post} aspect="square" />
+              <PostList key={post.url} post={post} aspect="square" />
             ))}
           </div>
           <div className="mt-10 flex justify-center">
