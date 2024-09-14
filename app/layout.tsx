@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 // import { ThemeProvider } from "next-themes";
 import Providers from "@/components/ui/providers";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +21,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Providers>
-          <body className={inter.className}>{children}</body>
-        </Providers>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers>
+            <body className={inter.className}>{children}</body>
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

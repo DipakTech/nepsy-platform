@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import GridPattern from "../magicui/animated-grid-pattern";
 import HeroIpoImage from "./ipo-image";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -9,8 +8,7 @@ export default function DeploymentHero() {
   return (
     // bg-neutral-50 dark:
 
-    <div className="relative flex h-screen  flex-col items-center justify-center overflow-hidden px-4 py-20 md:px-8 md:py-40 bg-neutral-900">
-      <GridPattern numSquares={5} maxOpacity={0.1} />
+    <div className="relative h-full flex flex-col items-center justify-center overflow-hidden px-4 py-20 md:px-8 md:py-40 -z-10">
       <HeroIpoImage />
       {/* Background grid */}
       <div className="pointer-events-none absolute inset-0 z-0 grid h-full w-full -rotate-45 transform select-none grid-cols-2 gap-10 md:grid-cols-4">
@@ -77,7 +75,7 @@ export default function DeploymentHero() {
       </div>
 
       {/* Main content */}
-      <div className="text-balance relative z-20 mx-auto mb-4 mt-4 max-w-4xl text-center text-3xl font-semibold tracking-tight text-white/60 dark:text-neutral-300 md:text-7xl">
+      <div className="text-balance relative z-20 mx-auto mb-4 mt-4 max-w-4xl text-center text-3xl font-semibold tracking-tight text-green-500 dark:text-neutral-300 md:text-7xl">
         <h2>
           <span
             className="inline-block"
@@ -94,7 +92,7 @@ export default function DeploymentHero() {
       </div>
 
       <p
-        className="relative z-20 mx-auto mt-4 max-w-lg px-4 text-center text-base/6 text-white/50 dark:text-gray-200"
+        className="relative z-20 mx-auto mt-4 max-w-lg px-4 text-center text-base/6 text-green-500 dark:text-white/50 dark:text-gray-200"
         style={{ opacity: 1, willChange: "auto", transform: "none" }}
       >
         we take your and your family&apos;s bulk information and check at once

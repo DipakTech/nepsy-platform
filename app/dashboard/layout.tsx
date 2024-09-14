@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar";
+import Header from "@/components/component/header";
 import { SidebarLayout, SidebarTrigger } from "@/components/ui/sidebar";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
@@ -10,6 +11,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
       <AppSidebar />
       <main className="flex flex-1 flex-col p-2 transition-all duration-300 ease-in-out">
         <div className="h-full rounded-md  p-2">
+          <Header wrapperClass="max-w-6xl  w-7xl" className="h-[30px] w-7xl " />
           <SidebarTrigger className="fixed" />
           {children}
         </div>
