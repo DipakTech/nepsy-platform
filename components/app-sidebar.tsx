@@ -70,7 +70,7 @@ const data = {
     },
     {
       title: "News",
-      url: "dashboard/ipo-news",
+      url: "/dashboard/ipo-news",
       icon: Newspaper,
       isActive: true,
       items: [
