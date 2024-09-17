@@ -173,7 +173,7 @@ export function AppSidebar() {
       </SidebarContent>
       {/* <StorageCard /> */}
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   );

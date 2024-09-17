@@ -1,6 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar";
-import Header from "@/components/component/header";
 import { SidebarLayout, SidebarTrigger } from "@/components/ui/sidebar";
+import Header from "./components/header";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const { cookies } = await import("next/headers");

@@ -1,35 +1,33 @@
 "use client";
+
 import React from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import HeroIpoImage from "./ipo-image";
-import Link from "next/link";
-import { Button } from "../ui/button";
+import ShimmerButton from "../magicui/shimmer-button";
 
-export default function DeploymentHero() {
+const DeploymentHero = () => {
+  const { data: session } = useSession();
+  const { push } = useRouter();
+
+  const handleButtonClick = () => {
+    console.log("cliekd....");
+    push(session?.user ? "/dashboard" : "/auth/signin");
+  };
+
   return (
-    // bg-neutral-50 dark:
-
-    <div className="relative h-full flex flex-col items-center justify-center overflow-hidden px-4 py-20 md:px-8 md:py-40 -z-10">
+    <div className="relative flex h-full flex-col items-center justify-center overflow-hidden px-4 py-20 md:px-8 md:py-40">
       <HeroIpoImage />
+
       {/* Background grid */}
       <div className="pointer-events-none absolute inset-0 z-0 grid h-full w-full -rotate-45 transform select-none grid-cols-2 gap-10 md:grid-cols-4">
-        {/* Grid columns */}
         {[...Array(4)].map((_, index) => (
           <div key={index} className="relative h-full w-full">
-            {/* Vertical lines */}
             {[0, 1].map((pos) => (
               <div
                 key={pos}
-                // style={{
-                //   "--background": "#ffffff",
-                //   "--color": "rgba(0, 0, 0, 0.2)",
-                //   "--height": "5px",
-                //   "--width": "1px",
-                //   "--fade-stop": "90%",
-                //   "--offset": "150px",
-                //   "--color-dark": "rgba(255, 255, 255, 0.3)",
-                // }}
                 className={`absolute top-[calc(var(--offset)/2*-1)] h-[calc(100%+var(--offset))] w-[var(--width)] bg-[linear-gradient(to_bottom,var(--color),var(--color)_50%,transparent_0,transparent)] [background-size:var(--width)_var(--height)] [mask:linear-gradient(to_top,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_bottom,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)] [mask-composite:exclude] z-30 dark:bg-[linear-gradient(to_bottom,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)] ${
-                  pos === 0 ? "left-0" : "left-auto right-0"
+                  pos === 0 ? "left-0" : "right-0"
                 }`}
               />
             ))}
@@ -75,56 +73,28 @@ export default function DeploymentHero() {
       </div>
 
       {/* Main content */}
-      <div className="text-balance relative z-20 mx-auto mb-4 mt-4 max-w-4xl text-center text-3xl font-semibold tracking-tight text-green-500 dark:text-neutral-300 md:text-7xl">
-        <h2>
-          <span
-            className="inline-block"
-            style={{
-              filter: "blur(0px)",
-              opacity: 1,
-              willChange: "auto",
-              transform: "none",
-            }}
-          >
-            Check your ipo result in seconds, not hours.
+      <div className="relative z-20 mx-auto mb-4 mt-4 max-w-4xl text-center">
+        <h2 className="text-balance text-3xl font-semibold tracking-tight text-green-500 dark:text-neutral-300 md:text-7xl">
+          <span className="inline-block">
+            Check Bulk IPO results in seconds, not hours.
           </span>
         </h2>
       </div>
 
-      <p
-        className="relative z-20 mx-auto mt-4 max-w-lg px-4 text-center text-base/6 text-green-500 dark:text-white/50 dark:text-gray-200"
-        style={{ opacity: 1, willChange: "auto", transform: "none" }}
-      >
-        we take your and your family&apos;s bulk information and check at once
+      <p className="relative z-20 mx-auto mt-4 max-w-lg px-4 text-center text-base/6 text-green-500 dark:text-gray-200">
+        We take your and your family&apos;s bulk information and check at once
         in a single click.
       </p>
 
-      <div
-        className="mb-10 mt-8 flex w-full flex-col items-center justify-center gap-4 px-8 sm:flex-row md:mb-20"
-        style={{ opacity: 1, willChange: "auto", transform: "none" }}
-      >
-        <Link
-          href={"/dashboard"}
-          className="bg-orange-700 hover:bg-orange-600 text-white"
-        >
-          <Button>Check Result</Button>
-        </Link>
+      <div className="mb-10 mt-8 flex w-full items-center justify-center">
+        <ShimmerButton onClick={handleButtonClick} className="shadow-2xl">
+          <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
+            {session?.user ? "Check Result" : "Signup for free"}
+          </span>
+        </ShimmerButton>
       </div>
-
-      {/* <div
-        className="relative mx-auto max-w-7xl rounded-[32px] border border-neutral-200/50 bg-neutral-100 p-2 backdrop-blur-lg dark:border-neutral-700 dark:bg-neutral-800/50 md:p-4"
-        style={{ opacity: 1, willChange: "auto", transform: "none" }}
-      >
-        <div className="rounded-[24px] border border-neutral-200 bg-white p-2 dark:border-neutral-700 dark:bg-black">
-          <Image
-            alt="header"
-            width={1920}
-            height={1080}
-            className="rounded-[20px]"
-            src="https://assets.aceternity.com/pro/dashboard-new.webp"
-          />
-        </div>
-      </div> */}
     </div>
   );
-}
+};
+
+export default DeploymentHero;

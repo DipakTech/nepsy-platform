@@ -10,10 +10,8 @@ import {
 import { useEffect } from "react";
 
 import { useRouter } from "next/navigation";
-import { ModeToggle } from "./toggle";
 import { cn } from "@/lib/utils";
-import { UserNav } from "@/app/dashboard/components/user-nav";
-import { useSession } from "next-auth/react";
+import { ModeToggle } from "@/components/component/toggle";
 
 function useBoundedScroll(threshold: number) {
   const { scrollY } = useScroll();
@@ -36,6 +34,7 @@ function useBoundedScroll(threshold: number) {
       scrollYBounded.set(clamp(newScrollYBounded, 0, threshold));
     });
   }, [threshold, scrollY, scrollYBounded]);
+
   return { scrollYBounded, scrollYBoundedProgress };
 }
 
@@ -54,12 +53,11 @@ export default function Header({
   );
 
   const router = useRouter();
-  const { data: session } = useSession();
 
   return (
     <div
       className={cn(
-        "mx-auto flex w-full max-w-7xl flex-1 overflow-hidden dark:text-slate-900 overflow-x-hidden z-50",
+        "mx-auto flex w-full  flex-1 overflow-hidden dark:text-slate-900 overflow-x-hidden z-50",
         wrapperClass,
       )}
     >
@@ -75,14 +73,14 @@ export default function Header({
               scrollYBoundedProgressDelayed,
               [0, 1],
               [1, 0.1],
-            )})`,
+            )})`, // Adjusted to use a dark slate color
           }}
           className={cn(
             "fixed inset-x-0 flex h-10 shadow backdrop-blur-md",
             className,
           )}
         >
-          <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-8">
+          <div className="ml-auto flex w-full max-w-7xl items-center justify-between px-8">
             <motion.p
               style={{
                 scale: useTransform(
@@ -93,14 +91,7 @@ export default function Header({
               }}
               onClick={() => router.push("/")}
               className="flex origin-left items-center text-xl font-semibold uppercase cursor-pointer"
-            >
-              <span className="-ml-1.5 inline-block -rotate-90 text-[10px]  text-slate-900 dark:text-slate-300 dark:hover:text-white leading-[0]">
-                IPO
-              </span>
-              <span className="-ml-1 text-2xl text-slate-900 dark:text-slate-300 dark:hover:text-white tracking-[-.075em]">
-                Upcoming.
-              </span>
-            </motion.p>
+            ></motion.p>
             <motion.nav
               style={{
                 opacity: useTransform(
@@ -111,11 +102,13 @@ export default function Header({
               }}
               className=" sm:flex items-center space-x-6 text-sm font-medium text-slate-400"
             >
+              <div className="flex items-center space-x-3"></div>
               <div className="flex gap-2 items-center ">
-                <nav className="ml-auto flex items-center gap-4">
+                <nav className="ml-auto flex items-center gap-2">
                   <ModeToggle />
-                  {session?.user && <UserNav />}
+                  {/* <UserButton /> */}
                 </nav>
+                {/* <MobileMenu /> */}
               </div>
             </motion.nav>
           </div>

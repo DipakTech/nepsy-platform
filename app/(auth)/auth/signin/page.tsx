@@ -8,23 +8,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { GithubIcon } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 
 export default function Component() {
-  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleEmailSignin = async () => {
     setLoading(true);
     try {
-      const res = await signIn("email", {
-        email,
-        redirect: false,
-        callbackUrl: "/",
+      const res = await signIn("google", {
+        // redirect: false,
+        callbackUrl: "/dashboard",
       });
       alert(res);
       if (res?.error) {
@@ -41,7 +37,7 @@ export default function Component() {
 
   const handleGithubSignin = async () => {
     try {
-      await signIn("github", { callbackUrl: "/" });
+      await signIn("github", { callbackUrl: "/dashboard" });
     } catch (error) {
       console.error(error);
       toast.error(String(error));
@@ -58,16 +54,6 @@ export default function Component() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="m@example.com"
-              required
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
           <Button
             className="bg-[#08193b] hover:bg-blue-900 text-white w-full"
             type="submit"
