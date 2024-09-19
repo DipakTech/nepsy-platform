@@ -8,7 +8,6 @@ export const getCurrentUserSharesList = async () => {
 
   try {
     const usersAppliedShareList = await prisma.accountHolder.findMany({
-      take: 5,
       include: {
         shares: true,
       },
