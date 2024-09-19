@@ -1,28 +1,30 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronsUpDown, Plus } from "lucide-react"
+import * as React from "react";
+// import { ChevronsUpDown, Plus } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
+  // DropdownMenuContent,
+  // DropdownMenuItem,
+  // DropdownMenuLabel,
+  // DropdownMenuSeparator,
+  // DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
 export function TeamSwitcher({
   teams,
 }: {
   teams: {
-    name: string
-    logo: React.ElementType
-    plan: string
-  }[]
+    name: string;
+    logo: React.ElementType;
+    plan: string;
+  }[];
 }) {
-  const [activeTeam, setActiveTeam] = React.useState(teams[0])
+  const [activeTeam] = React.useState(teams[0]);
+  // const [activeTeam, setActiveTeam] = React.useState(teams[0]);
 
   return (
     <DropdownMenu>
@@ -37,7 +39,7 @@ export function TeamSwitcher({
           <ChevronsUpDown className="ml-auto h-4 w-4 text-muted-foreground/50" />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
+      {/* <DropdownMenuContent
         className="w-64"
         align="start"
         side="right"
@@ -73,7 +75,7 @@ export function TeamSwitcher({
           </div>
           <div className="font-medium text-muted-foreground">Add workspace</div>
         </DropdownMenuItem>
-      </DropdownMenuContent>
+      </DropdownMenuContent> */}
     </DropdownMenu>
-  )
+  );
 }

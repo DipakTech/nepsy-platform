@@ -23,7 +23,6 @@ const Google = GoogleProvider({
 });
 
 export const authOptions: AuthOptions = {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //   @ts-ignore
   adapter: PrismaAdapter(prisma),
   providers: [Github, Google],

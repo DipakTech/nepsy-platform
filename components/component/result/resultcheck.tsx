@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import confetti from "canvas-confetti";
 import { getCompanies } from "@/action/ipo-result";
 import { Company } from "../Ipo-result-modal";
+import BlurFade from "@/components/ui/BlurFade";
 
 export interface IpoResult {
   company_id: number;
@@ -15,6 +16,13 @@ export interface IpoResult {
     message: string;
   } | null;
 }
+
+export const getCompanyName = (companies: Company[], companyId: number) => {
+  const company = companies.find(
+    (company) => Number(company.id) === Number(companyId),
+  );
+  return company ? company.name : "Unknown Company";
+};
 
 interface BulkIpoResultProps {
   results: IpoResult[];
@@ -31,13 +39,6 @@ export default function BulkIpoResult({ results }: BulkIpoResultProps) {
     };
     fetchCompanies();
   }, []);
-
-  const getCompanyName = (companyId: number) => {
-    const company = companies.find(
-      (company) => Number(company.id) === Number(companyId),
-    );
-    return company ? company.name : "Unknown Company";
-  };
 
   return (
     <div className="mx-auto">
@@ -59,7 +60,7 @@ export default function BulkIpoResult({ results }: BulkIpoResultProps) {
                 <CardHeader>
                   <CardTitle className="text-md font-semibold">
                     {/* Company ID: {result.company_id} */}
-                    {getCompanyName(result.company_id)}
+                    {getCompanyName(companies, result.company_id)}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -69,12 +70,17 @@ export default function BulkIpoResult({ results }: BulkIpoResultProps) {
                   </p>
                   {result.result &&
                     result.result.allotted_data.map((data, dataIndex) => (
-                      <div key={dataIndex} className="mb-2">
-                        <p>
-                          <span className="font-medium">Allotted Kitta:</span>{" "}
-                          {data.allotted_kitta}
-                        </p>
-                      </div>
+                      <BlurFade
+                        key={dataIndex}
+                        delay={0.04 * 6 + dataIndex * 0.05}
+                      >
+                        <div className="mb-2">
+                          <p>
+                            <span className="font-medium">Allotted Kitta:</span>{" "}
+                            {data.allotted_kitta}
+                          </p>
+                        </div>
+                      </BlurFade>
                     ))}
                   <p className="mt-4 text-green-600 font-semibold">
                     {result?.result?.message ?? "Sorry, you were not selected"}

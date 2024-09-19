@@ -12,14 +12,14 @@ generator client {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  shares        Share[]
+  id             String          @id @default(cuid())
+  name           String?
+  email          String          @unique
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  AccountHolders AccountHolder[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -64,15 +64,28 @@ model VerificationToken {
   @@id([identifier, token])
 }
 
-model Share {
-  id                  String   @id @unique @default(cuid())
+model AccountHolder {
+  id                  String   @id @default(cuid())
   createdAt           DateTime @default(now())
-  updatedAt           DateTime @default(now()) @updatedAt
+  updatedAt           DateTime @updatedAt
   account_holder_name String
-  company_name        String
-  kitta               Int
+  // email               String   @unique @default("dipakgiri.dev@gmail.com")
+  // phone_number        String   @default("9865506700")
   boid                String   @unique
-  status              String   @default("APPLIED")
-  User                User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId              String?
+  shares              Share[]
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String
+}
+
+model Share {
+  id              String        @id @default(cuid())
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  company_name    String
+  kitta           Int
+  status          String        @default("APPLIED")
+  accountHolder   AccountHolder @relation(fields: [accountHolderId], references: [id])
+  accountHolderId String
+
+  @@unique([company_name, accountHolderId])
 }

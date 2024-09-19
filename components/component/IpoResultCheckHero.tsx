@@ -11,7 +11,6 @@ const DeploymentHero = () => {
   const { push } = useRouter();
 
   const handleButtonClick = () => {
-    console.log("cliekd....");
     push(session?.user ? "/dashboard" : "/auth/signin");
   };
 

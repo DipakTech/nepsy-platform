@@ -41,15 +41,17 @@ export function NavMain({
                   <div className="line-clamp-1 pr-6">{item.title}</div>
                 </div>
               </Link>
-              <CollapsibleTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="absolute right-1 h-6 w-6 rounded-md p-0 ring-ring transition-all focus-visible:ring-2 data-[state=open]:rotate-90"
-                >
-                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                  <span className="sr-only">Toggle</span>
-                </Button>
-              </CollapsibleTrigger>
+              {(item.items?.length ?? 0) > 0 && (
+                <CollapsibleTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="absolute right-1 h-6 w-6 rounded-md p-0 ring-ring transition-all focus-visible:ring-2 data-[state=open]:rotate-90"
+                  >
+                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                    <span className="sr-only">Toggle</span>
+                  </Button>
+                </CollapsibleTrigger>
+              )}
             </div>
             <CollapsibleContent className="px-4 py-0.5">
               <ul className="grid border-l px-2">

@@ -1,19 +1,14 @@
 import { getCurrentUserByEmail } from "@/lib/getCurrentUserByEmail";
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
-export const addShareEntry = async ({
+export const addAccountHolder = async ({
   account_holder_name,
   boid,
-  status,
-  company_name,
-  kitta,
 }: {
   account_holder_name: string;
   boid: string;
-  status: string;
-  company_name: string;
-  kitta: string;
 }) => {
   try {
     const currentUser = await getCurrentUserByEmail();
@@ -23,17 +18,17 @@ export const addShareEntry = async ({
         message: "error finding user..",
       });
 
-    const addedShare = await prisma.share.create({
+    const addAccount = await prisma.accountHolder.create({
       data: {
         account_holder_name,
         boid: boid,
-        company_name,
-        kitta: Number(kitta),
         userId: currentUser.id,
       },
     });
 
-    return addedShare;
+    revalidatePath("dashboard/add-account", "page");
+
+    return addAccount;
   } catch (error) {
     console.log(error);
     return {

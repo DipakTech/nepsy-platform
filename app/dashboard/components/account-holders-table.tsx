@@ -32,9 +32,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Share } from "@prisma/client";
+import { AccountHolder } from "@prisma/client";
 
-export const columns: ColumnDef<Share>[] = [
+export const columns: ColumnDef<AccountHolder>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -64,40 +64,7 @@ export const columns: ColumnDef<Share>[] = [
       <div className="capitalize">{row.getValue("account_holder_name")}</div>
     ),
   },
-  {
-    accessorKey: "company_name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Company Name
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("company_name")}</div>
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          status
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("status")}</div>
-    ),
-  },
+
   {
     accessorKey: "boid",
     header: ({ column }) => {
@@ -113,20 +80,16 @@ export const columns: ColumnDef<Share>[] = [
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("boid")}</div>,
   },
-  {
-    accessorKey: "kitta",
-    header: () => <div className="text-start">Kitta</div>,
-    cell: ({ row }) => <div className="lowercase">{row.getValue("kitta")}</div>,
-  },
 ];
 
-export function ShareDataTable({
+export function AccountHoldersDataTable({
   data,
   // selectedRowsData,
   setSelectedRowsData,
 }: {
-  data: any[];
-  setSelectedRowsData: (value: any[]) => void;
+  data: AccountHolder[];
+  // selectedRowsData: Share[];
+  setSelectedRowsData: (value: AccountHolder[]) => void;
 }) {
   // console.log(rowSelection, "row selection...");
 

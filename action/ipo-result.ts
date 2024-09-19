@@ -1,6 +1,6 @@
 import { IpoResult } from "@/components/component/result/resultcheck";
 import axios from "axios";
-import { AllottedIPO } from "./share/updateUserShareData";
+import { AllottedIPO } from "./share/createShare";
 
 export const getCompanies = async () => {
   try {
@@ -94,6 +94,16 @@ export const getResultsByBoids = async (
 export const updateShares = async (allottedIPOs: AllottedIPO[]) => {
   try {
     const response = await axios.put("/api/share", allottedIPOs);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating shares:", error);
+    throw error;
+  }
+};
+
+export const addShareResult = async (allottedIPOs: AllottedIPO) => {
+  try {
+    const response = await axios.post("/api/share", allottedIPOs);
     return response.data;
   } catch (error) {
     console.error("Error updating shares:", error);

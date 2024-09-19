@@ -1,8 +1,4 @@
 "use client";
-
-import { useState } from "react";
-import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -12,12 +8,11 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import SubmitButton from "./submit-button";
-import { ShareDataTable } from "@/app/dashboard/components/share-list-table";
-import { Share } from "@prisma/client";
-
-import { useTransition } from "react";
-import { getResultsByBoids, updateShares } from "@/action/ipo-result";
+// import { ShareDataTable } from "@/app/dashboard/components/share-list-table";
+import { AccountHolder, Share } from "@prisma/client";
 import BulkIpoResult, { IpoResult } from "./result/resultcheck";
+import { Dispatch, SetStateAction } from "react";
+import { AccountHoldersDataTable } from "@/app/dashboard/components/account-holders-table";
 
 export type Company = {
   id: string;
@@ -26,74 +21,51 @@ export type Company = {
 
 type IPOResultModalProps = {
   companies: Company[];
-  appliedShareList: Share[];
+  appliedShareList: AccountHolder[];
+  bulkIpoResult: IpoResult[];
+  setBulkIpoResult: (value: SetStateAction<IpoResult[]>) => void;
+  selectedCompany: string | null;
+  handleCheck: () => void;
+  selectedRowsData: Share[];
+  setSelectedRowsData: Dispatch<SetStateAction<AccountHolder[]>>;
+  isCheckingResult: boolean;
+  setSelectedCompany: (value: string) => void;
 };
 
 const IPOResultModal: React.FC<IPOResultModalProps> = ({
   companies,
   appliedShareList,
+  bulkIpoResult,
+  handleCheck,
+  isCheckingResult,
+  selectedCompany,
+  selectedRowsData,
+  setBulkIpoResult,
+  setSelectedCompany,
+  setSelectedRowsData,
 }) => {
-  const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
-  const [selectedRowsData, setSelectedRowsData] = useState<Share[]>([]);
-
-  const [isCheckingResult, startCheckingResult] = useTransition();
-  const [bulkIpoResult, setBulkIpoResult] = useState<IpoResult[]>([]);
-
-  const handleCheck = () => {
-    const boids = selectedRowsData.map((share) => Number(share.boid));
-    startCheckingResult(async () => {
-      const response: IpoResult[] = await getResultsByBoids(
-        Number(selectedCompany),
-        boids,
-      );
-
-      const allottedIpos = response
-        .filter((res) => res.result?.message === "Congratulations!!")
-        .map((res) => ({
-          boid: res.result!.allotted_data[0].boid,
-          allotted_kitta: parseInt(
-            res.result!.allotted_data[0].allotted_kitta,
-            10,
-          ),
-        }));
-
-      if (allottedIpos.length > 0) {
-        await updateShares(allottedIpos);
-      }
-
-      if (response.length) setBulkIpoResult(response);
-    });
-  };
-
   return (
-    <Dialog onOpenChange={() => setBulkIpoResult([])}>
-      <DialogTrigger asChild>
-        <Button variant="destructive" className="w-fit">
-          Check IPO Result
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="text-white max-w-3xl border-none">
-        <ModalHeader />
-        {bulkIpoResult.length ? (
-          <BulkIpoResult
-            results={bulkIpoResult}
-            setBulkIpoResult={setBulkIpoResult}
-          />
-        ) : (
-          <ModalBody
-            companies={companies}
-            appliedShareList={appliedShareList}
-            selectedCompany={selectedCompany}
-            setSelectedCompany={setSelectedCompany}
-            handleCheck={handleCheck}
-            selectedRowsData={selectedRowsData}
-            setSelectedRowsData={setSelectedRowsData}
-            isCheckingResult={isCheckingResult}
-          />
-        )}
-        <ModalFooter />
-      </DialogContent>
-    </Dialog>
+    <div className="flex flex-col mt-10 ">
+      <ModalHeader />
+      {bulkIpoResult.length ? (
+        <BulkIpoResult
+          results={bulkIpoResult}
+          setBulkIpoResult={setBulkIpoResult}
+        />
+      ) : (
+        <ModalBody
+          companies={companies}
+          appliedShareList={appliedShareList}
+          selectedCompany={selectedCompany}
+          setSelectedCompany={setSelectedCompany}
+          handleCheck={handleCheck}
+          selectedRowsData={selectedRowsData}
+          setSelectedRowsData={setSelectedRowsData}
+          isCheckingResult={isCheckingResult}
+        />
+      )}
+      <ModalFooter />
+    </div>
   );
 };
 
@@ -108,12 +80,12 @@ const ModalHeader: React.FC = () => (
 
 type ModalBodyProps = {
   companies: Company[];
-  appliedShareList: Share[];
+  appliedShareList: AccountHolder[];
   selectedCompany: string | null;
   setSelectedCompany: (value: string) => void;
   handleCheck: () => void;
   selectedRowsData: Share[];
-  setSelectedRowsData: (value: Share[]) => void;
+  setSelectedRowsData: (value: AccountHolder[]) => void;
   isCheckingResult: boolean;
 };
 
@@ -123,7 +95,6 @@ const ModalBody: React.FC<ModalBodyProps> = ({
   selectedCompany,
   setSelectedCompany,
   handleCheck,
-  // selectedRowsData,
   setSelectedRowsData,
   isCheckingResult,
 }) => (
@@ -146,12 +117,11 @@ const ModalBody: React.FC<ModalBodyProps> = ({
         </SelectContent>
       </Select>
     </div>
-    <ShareDataTable
+    <AccountHoldersDataTable
       data={appliedShareList}
-      // selectedRowsData={selectedRowsData}
       setSelectedRowsData={setSelectedRowsData}
     />
-    ,
+
     <SubmitButton
       isDisabled={isCheckingResult}
       className="w-full"

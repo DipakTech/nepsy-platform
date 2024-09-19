@@ -7,8 +7,11 @@ export const getCurrentUserSharesList = async () => {
   if (!currentUser?.email && !currentUser?.id) return [];
 
   try {
-    const usersAppliedShareList = await prisma.share.findMany({
+    const usersAppliedShareList = await prisma.accountHolder.findMany({
       take: 5,
+      include: {
+        shares: true,
+      },
       where: {
         userId: currentUser.id,
       },

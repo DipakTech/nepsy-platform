@@ -1,23 +1,19 @@
 import { getCompanies } from "@/action/ipo-result";
 import { getCurrentUserSharesList } from "@/action/share/getCurrentUserSharesList";
-import IPOResultModal from "@/components/component/Ipo-result-modal";
-import { IpoResultTable } from "@/components/component/result-table";
-import { Share } from "@prisma/client";
+import { getAccountHoldersWithShares } from "@/action/share/getShareResults";
+import { ResultTab } from "@/components/component/result/result-tab";
 
 export default async function Page() {
-  const appliedShareList: Share[] = await getCurrentUserSharesList();
+  const appliedShareList = await getCurrentUserSharesList();
   const companies = await getCompanies();
+  const accountHoldersWithShares = await getAccountHoldersWithShares();
+
   return (
-    <div className="flex flex-col gap-3 mt-24 container mx-auto">
-      <div className="h-[150px] flex justify-center items-center">
-        <IPOResultModal
-          appliedShareList={appliedShareList}
-          companies={companies}
-        />
-      </div>
-      <IpoResultTable
+    <div className="flex max-w-6xl p-5 rounded-md shadow-md flex-col gap-3 mt-24  mx-auto dark:bg-[#0D1421]">
+      <ResultTab
         appliedShareList={appliedShareList}
         companies={companies}
+        accountHoldersWithShares={accountHoldersWithShares}
       />
     </div>
   );

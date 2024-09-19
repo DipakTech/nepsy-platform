@@ -43,7 +43,33 @@ const data = {
   },
   navMain: [
     {
-      title: "IPO",
+      title: "Add Account",
+      url: "/dashboard/add-account",
+      icon: SquareTerminal,
+      isActive: true,
+      items: [
+        // {
+        //   title: "History",
+        //   url: "#",
+        //   icon: History,
+        //   description: "View your recent prompts",
+        // },
+        // {
+        //   title: "Starred",
+        //   url: "#",
+        //   icon: Star,
+        //   description: "Browse your starred prompts",
+        // },
+        // {
+        //   title: "Settings",
+        //   url: "#",
+        //   icon: Settings2,
+        //   description: "Configure your playground",
+        // },
+      ],
+    },
+    {
+      title: "Check IPO Result",
       url: "/dashboard",
       icon: SquareTerminal,
       isActive: true,
