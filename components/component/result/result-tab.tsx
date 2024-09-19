@@ -69,8 +69,12 @@ export const ResultTab: React.FC<IPOResultModalProps> = ({
   return (
     <Tabs defaultValue="checkipo" className="w-full">
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="checkipo">check result</TabsTrigger>
-        <TabsTrigger value="recentresult">Recent results</TabsTrigger>
+        <TabsTrigger value="checkipo" className="bg-transparent">
+          check result
+        </TabsTrigger>
+        <TabsTrigger value="recentresult" className="bg-transparent">
+          Recent alloted Ipos
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="checkipo">
         <IPOResultModal

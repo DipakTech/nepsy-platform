@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import HeroIpoImage from "./ipo-image";
 import ShimmerButton from "../magicui/shimmer-button";
+import { BackgroundLines } from "../ui/background-lines";
 
 const DeploymentHero = () => {
   const { data: session } = useSession();
@@ -15,7 +16,7 @@ const DeploymentHero = () => {
   };
 
   return (
-    <div className="relative flex h-full flex-col items-center justify-center overflow-hidden px-4 py-20 md:px-8 md:py-40">
+    <div className="relative flex h-full flex-col items-center justify-center overflow-hidden px-4 py-20 md:px-8 md:py-35">
       <HeroIpoImage />
 
       {/* Background grid */}
@@ -34,53 +35,15 @@ const DeploymentHero = () => {
         ))}
       </div>
 
-      {/* Animated elements */}
-      <div
-        className="absolute left-96 top-20 m-auto h-14 w-px rounded-full bg-gradient-to-t from-orange-500 via-yellow-500 to-transparent"
-        style={{
-          willChange: "transform",
-          transform:
-            "translateX(249.429px) translateY(449.429px) rotate(-45deg)",
-          opacity: 0,
-        }}
-      />
-
-      {/* Particle effect */}
-      <div
-        className="absolute z-50 h-2 w-2"
-        style={{
-          left: "677.929px",
-          top: "585.569px",
-          transform: "translate(-50%, -50%)",
-        }}
-      >
-        <div
-          className="absolute -inset-x-10 top-0 m-auto h-[4px] w-10 rounded-full bg-gradient-to-r from-transparent via-orange-500 to-transparent blur-sm"
-          style={{ opacity: 0, willChange: "opacity" }}
-        />
-        {[...Array(20)].map((_, i) => (
-          <span
-            key={i}
-            className="absolute h-1 w-1 rounded-full bg-gradient-to-b from-orange-500 to-yellow-500"
-            style={{
-              opacity: 1,
-              willChange: "transform, opacity",
-              transform: "none",
-            }}
-          />
-        ))}
-      </div>
-
       {/* Main content */}
-      <div className="relative z-20 mx-auto mb-4 mt-4 max-w-4xl text-center">
-        <h2 className="text-balance text-3xl font-semibold tracking-tight text-green-500 dark:text-neutral-300 md:text-7xl">
-          <span className="inline-block">
-            Check Bulk IPO results in seconds, not hours.
-          </span>
+
+      <div className="relative z-20 mx-auto  max-w-4xl text-center">
+        <h2 className="bg-clip-text text-transparent text-center bg-gradient-to-b from-neutral-900 to-neutral-700 dark:from-neutral-600 dark:to-white text-2xl md:text-4xl lg:text-7xl font-sans py-2 md:py-10 relative z-20 font-bold tracking-tight">
+          Check Bulk IPO results in seconds, <br /> not hours..
         </h2>
       </div>
 
-      <p className="relative z-20 mx-auto mt-4 max-w-lg px-4 text-center text-base/6 text-green-500 dark:text-gray-200">
+      <p className="max-w-xl mx-auto text-sm md:text-lg text-neutral-700 dark:text-neutral-400 text-center">
         We take your and your family&apos;s bulk information and check at once
         in a single click.
       </p>

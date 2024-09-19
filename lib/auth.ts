@@ -23,12 +23,17 @@ const Google = GoogleProvider({
 });
 
 export const authOptions: AuthOptions = {
-  //   @ts-ignore
+  // @ts-ignore
   adapter: PrismaAdapter(prisma),
   providers: [Github, Google],
   debug: true,
   session: {
-    strategy: "database",
+    strategy: "jwt",
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      return token;
+    },
   },
 };
 

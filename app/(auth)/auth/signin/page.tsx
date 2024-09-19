@@ -18,16 +18,16 @@ export default function Component() {
   const handleEmailSignin = async () => {
     setLoading(true);
     try {
-      const res = await signIn("google", {
+      await signIn("google", {
         // redirect: false,
         callbackUrl: "/dashboard",
       });
-      alert(res);
-      if (res?.error) {
-        toast.error(res.error);
-      } else {
-        toast.success("Email sent. Check your inbox.");
-      }
+      // alert(res);
+      // if (res?.error) {
+      //   toast.error(res.error);
+      // } else {
+      //   toast.success("Email sent. Check your inbox.");
+      // }
     } catch (error) {
       toast.error(String(error));
     } finally {
@@ -35,14 +35,14 @@ export default function Component() {
     }
   };
 
-  const handleGithubSignin = async () => {
-    try {
-      await signIn("github", { callbackUrl: "/dashboard" });
-    } catch (error) {
-      console.error(error);
-      toast.error(String(error));
-    }
-  };
+  // const handleGithubSignin = async () => {
+  //   try {
+  //     await signIn("github", { callbackUrl: "/dashboard" });
+  //   } catch (error) {
+  //     console.error(error);
+  //     toast.error(String(error));
+  //   }
+  // };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -60,7 +60,7 @@ export default function Component() {
             onClick={handleEmailSignin}
             disabled={loading}
           >
-            {loading ? "Loading..." : "Sign Up with Email"}
+            {loading ? "Loading..." : "Sign Up with Google"}
           </Button>
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
@@ -72,12 +72,12 @@ export default function Component() {
               </span>
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-4">
+          {/* <div className="grid grid-cols-1 gap-4">
             <Button variant="outline" onClick={handleGithubSignin}>
               <GithubIcon className="mr-2 h-4 w-4" />
               GitHub
             </Button>
-          </div>
+          </div> */}
         </CardContent>
       </Card>
     </div>

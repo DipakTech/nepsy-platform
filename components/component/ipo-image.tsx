@@ -1,8 +1,8 @@
 import React from "react";
 
 const HeroIpoImage = ({
-  width = 196,
-  height = 244,
+  width = 130,
+  height = 200,
   className = "text-green-700",
 }) => {
   return (

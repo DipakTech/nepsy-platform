@@ -69,7 +69,7 @@ const IPOResultModal: React.FC<IPOResultModalProps> = ({
   );
 };
 
-const ModalHeader: React.FC = () => (
+export const ModalHeader: React.FC = () => (
   <div className="text-center">
     <h1 className="text-2xl text-slate-700 dark:text-white  font-bold">
       Check<span className="text-red-600">IPO</span>

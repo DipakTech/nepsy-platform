@@ -9,7 +9,7 @@ export default async function Page() {
   const accountHolders = await getAccountHolders();
   // const companies = await getCompanies();
   return (
-    <div className="flex flex-col gap-3 mt-24 container mx-auto">
+    <div className="flex max-w-6xl p-5 rounded-md shadow-md flex-col gap-3 mt-24  mx-auto dark:bg-[#0D1421]">
       <AccountHolders accountHolders={accountHolders} />
     </div>
   );

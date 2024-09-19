@@ -33,35 +33,39 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Share } from "@prisma/client";
+import { centerTruncate } from "./truncateLongText";
+import { ModalHeader } from "@/components/component/Ipo-result-modal";
 
 export const columns: ColumnDef<Share>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   id: "select",
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={
+  //         table.getIsAllPageRowsSelected() ||
+  //         (table.getIsSomePageRowsSelected() && "indeterminate")
+  //       }
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label="Select all"
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label="Select row"
+  //     />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
     accessorKey: "account_holder_name",
-    header: "Account holder name",
+    header: centerTruncate(`Account Holder`, 10),
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("account_holder_name")}</div>
+      <div className="capitalize">
+        {centerTruncate(row.getValue("account_holder_name"), 10)}
+      </div>
     ),
   },
   {
@@ -78,7 +82,9 @@ export const columns: ColumnDef<Share>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("company_name")}</div>
+      <div className="lowercase">
+        {centerTruncate(row.getValue("company_name"), 35)}
+      </div>
     ),
   },
   {
@@ -95,7 +101,7 @@ export const columns: ColumnDef<Share>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("status")}</div>
+      <div className="lowercase ">{row.getValue("status")}</div>
     ),
   },
   {
@@ -104,6 +110,7 @@ export const columns: ColumnDef<Share>[] = [
       return (
         <Button
           variant="ghost"
+          className="hidden sm:flex"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Boid
@@ -111,7 +118,9 @@ export const columns: ColumnDef<Share>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("boid")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase hidden sm:flex">{row.getValue("boid")}</div>
+    ),
   },
   {
     accessorKey: "kitta",
@@ -166,8 +175,11 @@ export function ShareDataTable({
   }, [rowSelection, setSelectedRowsData, table]);
 
   return (
-    <div className="w-full">
-      <div className="flex items-center py-4">
+    <div className="w-full flex-col pb-4">
+      <div className="mt-10">
+        <ModalHeader />
+      </div>
+      <div className="flex items-center mt-4 py-4">
         <Input
           placeholder="search account holder name..."
           value={

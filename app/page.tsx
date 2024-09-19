@@ -13,10 +13,14 @@ const Home = async () => {
         {/* <GridPattern numSquares={5} maxOpacity={0.1} /> */}
       </div>
       <Header />
-      <main className="min-h-[calc(100vh-150px)] flex-1">
+      <main className="min-h-[calc(100vh-40px)] overflow-hidden flex-1">
         <DeploymentHero />;
+        <footer>
+          <p className="text-center text-xs text-muted-foreground">
+            @build {new Date().getFullYear()}. All Rights Reserved
+          </p>
+        </footer>
       </main>
-      {/* <Footer /> */}
     </main>
   );
 };
