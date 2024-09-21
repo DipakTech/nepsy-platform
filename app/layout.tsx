@@ -5,6 +5,7 @@ import "./globals.css";
 // import { ThemeProvider } from "next-themes";
 import Providers from "@/components/ui/providers";
 import { ThemeProvider } from "@/components/theme-provider";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
           <Providers>
             <body className={inter.className}>{children}</body>
           </Providers>
+          <GoogleAnalytics gaId="G-X2258WMLV3" />
         </ThemeProvider>
       </body>
     </html>

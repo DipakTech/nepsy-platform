@@ -5,6 +5,14 @@ import DeploymentHero from "@/components/component/IpoResultCheckHero";
 // import { Button } from "@/components/ui/button";
 // import GridPattern from "@/components/magicui/animated-grid-pattern";
 
+export const metadata = {
+  title: "Check Bulk IPO results in seconds,not hours",
+  openGraph: {
+    title:
+      "We take your and your family's bulk information and check at once in a single click.",
+  },
+};
+
 const Home = async () => {
   return (
     <main className="flex min-h-screen flex-col overflow-hidden">
