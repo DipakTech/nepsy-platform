@@ -1,5 +1,5 @@
-// import puppeteer from "puppeteer";
-// import * as cheerio from "cheerio";
+import puppeteer from "puppeteer";
+import * as cheerio from "cheerio";
 
 const newsItems = [
   {
@@ -87,29 +87,29 @@ const newsItems = [
 export async function GetNews() {
   let browser;
   try {
-    // browser = await puppeteer.launch();
-    // const page = await browser.newPage();
-    // await page.goto("https://www.sharesansar.com/category/ipo-fpo-news");
-    // const html = await page.content(); //get the entire html content
-    // const $ = cheerio.load(html); //load the html content
+    browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto("https://www.sharesansar.com/category/ipo-fpo-news");
+    const html = await page.content(); //get the entire html content
+    const $ = cheerio.load(html); //load the html content
 
-    // const newsItems: any[] = [];
+    const newsItems: any[] = [];
 
-    // $(".featured-news-list").each((index, element) => {
-    //   const $element = $(element);
+    $(".featured-news-list").each((index, element) => {
+      const $element = $(element);
 
-    //   const title = $element.find(".featured-news-title").text().trim();
-    //   const date = $element.find(".text-org").text().trim();
-    //   const url = $element.find("a").first().attr("href");
-    //   const imageUrl = $element.find("img").attr("src");
+      const title = $element.find(".featured-news-title").text().trim();
+      const date = $element.find(".text-org").text().trim();
+      const url = $element.find("a").first().attr("href");
+      const imageUrl = $element.find("img").attr("src");
 
-    //   newsItems.push({
-    //     title,
-    //     date,
-    //     url,
-    //     imageUrl,
-    //   });
-    // });
+      newsItems.push({
+        title,
+        date,
+        url,
+        imageUrl,
+      });
+    });
 
     return newsItems ?? [];
   } catch (error) {
