@@ -1,0 +1,6 @@
+{
+    "cons":[{
+        "path":"/api/cron",
+        "schedule":"*/1 * * * *"
+    }]
+}
