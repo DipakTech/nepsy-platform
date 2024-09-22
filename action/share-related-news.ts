@@ -1,5 +1,5 @@
-import puppeteer from "puppeteer";
-import * as cheerio from "cheerio";
+// import puppeteer from "puppeteer";
+// import * as cheerio from "cheerio";
 
 const newsItems = [
   {
@@ -85,50 +85,50 @@ const newsItems = [
 ];
 
 export async function GetNews() {
-  const install = require(`puppeteer/internal/node/install.js`).downloadBrowser;
-  await install();
+  // const install = require(`puppeteer/internal/node/install.js`).downloadBrowser;
+  // await install();
 
-  let browser;
+  // let browser;
   try {
-    browser = await puppeteer.launch({
-      args: [
-        "--use-gl=angle",
-        "--use-angle=swiftshader",
-        "--single-process",
-        "--no-sandbox",
-      ],
-      headless: true,
-    });
+    //   browser = await puppeteer.launch({
+    //     args: [
+    //       "--use-gl=angle",
+    //       "--use-angle=swiftshader",
+    //       "--single-process",
+    //       "--no-sandbox",
+    //     ],
+    //     headless: true,
+    //   });
 
-    const page = await browser.newPage();
+    //   const page = await browser.newPage();
 
-    await page.goto("https://www.sharesansar.com/category/ipo-fpo-news");
-    const html = await page.content();
-    const $ = cheerio.load(html);
-    const newsItems: any[] = [];
+    //   await page.goto("https://www.sharesansar.com/category/ipo-fpo-news");
+    //   const html = await page.content();
+    //   const $ = cheerio.load(html);
+    //   const newsItems: any[] = [];
 
-    $(".featured-news-list").each((index, element) => {
-      const $element = $(element);
+    //   $(".featured-news-list").each((index, element) => {
+    //     const $element = $(element);
 
-      const title = $element.find(".featured-news-title").text().trim();
-      const date = $element.find(".text-org").text().trim();
-      const url = $element.find("a").first().attr("href");
-      const imageUrl = $element.find("img").attr("src");
+    //     const title = $element.find(".featured-news-title").text().trim();
+    //     const date = $element.find(".text-org").text().trim();
+    //     const url = $element.find("a").first().attr("href");
+    //     const imageUrl = $element.find("img").attr("src");
 
-      newsItems.push({
-        title,
-        date,
-        url,
-        imageUrl,
-      });
-    });
+    //     newsItems.push({
+    //       title,
+    //       date,
+    //       url,
+    //       imageUrl,
+    //     });
+    //   });
 
-    return newsItems ?? [];
+    return newsItems;
   } catch (error) {
     return [];
   } finally {
-    if (browser) {
-      await browser.close();
-    }
+    // if (browser) {
+    //   await browser.close();
+    // }
   }
 }

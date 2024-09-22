@@ -35,6 +35,7 @@ export interface Post {
 // Main page component
 export default async function PostPage() {
   const posts = await GetNews();
+
   return (
     <>
       {posts && (
