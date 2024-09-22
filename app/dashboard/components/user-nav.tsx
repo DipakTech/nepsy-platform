@@ -31,7 +31,7 @@ export function UserNav() {
           )}
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[250px]">
+      <DropdownMenuContent className="w-[200px]">
         <DropdownMenuLabel>{session?.user?.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

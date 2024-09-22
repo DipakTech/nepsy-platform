@@ -81,6 +81,8 @@ export function AccountHolders() {
       setStartAddingTransition(async () => {
         setOpenAddShareModal(false);
 
+        //
+
         addMutation.mutateAsync({
           account_holder_name: newEntry.name,
           boid: newEntry.boid,

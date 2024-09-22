@@ -11,7 +11,9 @@ const config: Config = {
     extend: {
       animation: {
         "spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
+        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
         slide: "slide var(--speed) ease-in-out infinite alternate",
+        shimmer: "shimmer 8s infinite",
       },
       keyframes: {
         "spin-around": {
@@ -28,9 +30,22 @@ const config: Config = {
             transform: "translateZ(0) rotate(360deg)",
           },
         },
+        "border-beam": {
+          "100%": {
+            "offset-distance": "100%",
+          },
+        },
         slide: {
           to: {
             transform: "translate(calc(100cqw - 100%), 0)",
+          },
+        },
+        shimmer: {
+          "0%, 90%, 100%": {
+            "background-position": "calc(-100% - var(--shimmer-width)) 0",
+          },
+          "30%, 60%": {
+            "background-position": "calc(100% + var(--shimmer-width)) 0",
           },
         },
       },

@@ -1,7 +1,10 @@
 // "use client";
 // import { addShareEntry } from "@/action/share/addShareEntry";
+import { Footer } from "@/components/component/footer";
 import Header from "@/components/component/header";
+import HeroSection from "@/components/component/hero-section";
 import DeploymentHero from "@/components/component/IpoResultCheckHero";
+import GradientBackground from "@/components/ui/gradient-background";
 // import { Button } from "@/components/ui/button";
 // import GridPattern from "@/components/magicui/animated-grid-pattern";
 
@@ -22,12 +25,10 @@ const Home = async () => {
       </div>
       <Header />
       <main className="min-h-[calc(100vh-40px)] overflow-hidden flex-1">
-        <DeploymentHero />;
-        <footer>
-          <p className="text-center text-xs text-muted-foreground">
-            @build {new Date().getFullYear()}. All Rights Reserved
-          </p>
-        </footer>
+        <DeploymentHero />
+        <GradientBackground />
+        <HeroSection />
+        <Footer />
       </main>
     </main>
   );

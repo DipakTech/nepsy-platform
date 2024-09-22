@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import HeroIpoImage from "./ipo-image";
 import ShimmerButton from "../magicui/shimmer-button";
 import { BackgroundLines } from "../ui/background-lines";
+import AnimatedShinyText from "../magicui/animated-shiny-text";
 
 const DeploymentHero = () => {
   const { data: session } = useSession();
@@ -48,12 +49,14 @@ const DeploymentHero = () => {
         in a single click.
       </p>
 
-      <div className="mb-10 mt-8 flex w-full items-center justify-center">
-        <ShimmerButton onClick={handleButtonClick} className="shadow-2xl">
-          <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
-            {session?.user ? "Check Result" : "Signup for free"}
-          </span>
-        </ShimmerButton>
+      <div className="mb-10 mt-8 flex w-full items-center justify-center z-50">
+        <AnimatedShinyText>
+          <ShimmerButton onClick={handleButtonClick} className="shadow-2xl">
+            <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
+              {session?.user ? "Check Result" : "Signup for free"}
+            </span>
+          </ShimmerButton>
+        </AnimatedShinyText>
       </div>
     </div>
   );
