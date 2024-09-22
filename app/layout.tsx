@@ -6,6 +6,7 @@ import "./globals.css";
 import Providers from "@/components/ui/providers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { QueryCLientProvider } from "./QueryClientProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,9 +29,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Providers>
-            <body className={inter.className}>{children}</body>
-          </Providers>
+          <QueryCLientProvider>
+            <Providers>
+              <body className={inter.className}>{children}</body>
+            </Providers>
+          </QueryCLientProvider>
           <GoogleAnalytics gaId="G-X2258WMLV3" />
         </ThemeProvider>
       </body>

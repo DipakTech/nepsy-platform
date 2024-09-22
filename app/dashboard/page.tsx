@@ -9,7 +9,7 @@ export default async function Page() {
   const accountHoldersWithShares = await getAccountHoldersWithShares();
 
   return (
-    <div className="flex max-w-6xl p-5 rounded-md shadow-md flex-col gap-3 mt-24  mx-auto dark:bg-[#0D1421]">
+    <div className="flex max-w-6xl p-2 sm:p-5 rounded-md shadow-md flex-col gap-3 mt-24  mx-auto dark:bg-[#0D1421]">
       <ResultTab
         appliedShareList={appliedShareList}
         companies={companies}

@@ -29,23 +29,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import axios from "axios";
 import { Pencil, Trash2 } from "lucide-react";
 
-import { deleteShareEntry } from "@/action/share/deleteShareEntry";
 import { useTransition } from "react";
 import TooltipWrapper from "../tooltip/tooltip-provider";
 import { Modal } from "@/components/ui/modal";
 import { AccountHolder } from "@prisma/client";
-import { deleteAccountHolder } from "@/action/accountHolder/delete-account-holder";
+import useAddShare from "@/hooks/useMutation/useAddShare";
+import useGetAccountHolders from "@/hooks/useQuery/useGetAccountHolders";
+import AccountHolderSkeleton from "./account-holder-skeleton";
+import useDeleteShare from "@/hooks/useMutation/useDeleteShare";
+import { toast } from "sonner";
 
-export function AccountHolders({
-  accountHolders,
-}: // companies,
-{
-  accountHolders: AccountHolder[] | [];
-  // companies: Company[];
-}) {
+export function AccountHolders() {
   const [error, setError] = useState<string | null>(null);
   const [isDeleteShare, setDeleteShareModal] = useState<boolean>(false);
   const [isOpenAddShareModal, setOpenAddShareModal] = useState<boolean>(false);
@@ -53,6 +49,11 @@ export function AccountHolders({
 
   const [isDeletePending, setStartTransition] = useTransition();
   const [isAddSharePending, setStartAddingTransition] = useTransition();
+
+  const addMutation = useAddShare();
+  const deleteMutation = useDeleteShare();
+  const { data: accountHoldersList, isLoading } = useGetAccountHolders();
+  console.log(accountHoldersList);
 
   const [newEntry, setNewEntry] = useState<{
     name: string;
@@ -69,27 +70,31 @@ export function AccountHolders({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Input validation
     if (!newEntry.name || !newEntry.boid) {
       setError("All fields are required.");
       return;
     }
 
-    setError(null); // Clear any previous error
+    setError(null);
 
     try {
       setStartAddingTransition(async () => {
-        await axios.post("/api/accountHolder", {
+        setOpenAddShareModal(false);
+
+        addMutation.mutateAsync({
           account_holder_name: newEntry.name,
           boid: newEntry.boid,
         });
-        setOpenAddShareModal(false);
-      });
 
-      // Handle success (e.g., clear form, show success message)
-    } catch (error) {
-      // Handle error (e.g., show error message)
-    }
+        // clear the form
+        setNewEntry({
+          name: "",
+          boid: "",
+        });
+
+        toast.success("Account holder added successfully");
+      });
+    } catch (error) {}
   };
 
   const toggleModal = () => {
@@ -119,7 +124,7 @@ export function AccountHolders({
                 Add New Account
               </Button>
             </DialogTrigger>
-            <DialogContent className=" bg-slate-900">
+            <DialogContent>
               <DialogHeader>
                 <DialogTitle>Add New Account </DialogTitle>
                 <DialogDescription>
@@ -170,53 +175,57 @@ export function AccountHolders({
           </Dialog>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Account Holder Name</TableHead>
+          {isLoading ? (
+            <AccountHolderSkeleton />
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Account Holder Name</TableHead>
+                  <TableHead>BOID</TableHead>
+                  <TableHead>Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {accountHoldersList &&
+                  accountHoldersList.map((entry: AccountHolder) => {
+                    return (
+                      <TableRow key={entry.id}>
+                        <TableCell>
+                          <div className="font-medium">
+                            {entry.account_holder_name}
+                          </div>
+                        </TableCell>
 
-                <TableHead>BOID</TableHead>
-                <TableHead>Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {accountHolders.map((entry) => {
-                return (
-                  <TableRow key={entry.id}>
-                    <TableCell>
-                      <div className="font-medium">
-                        {entry.account_holder_name}
-                      </div>
-                    </TableCell>
+                        <TableCell>{entry.boid.toString()} </TableCell>
 
-                    <TableCell>{entry.boid.toString()} </TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            <TooltipWrapper body="Edit">
+                              <span className="text-xs  rounded-full hover:cursor-pointer p-2">
+                                <Pencil />
+                              </span>
+                            </TooltipWrapper>
 
-                    <TableCell>
-                      <div className="flex gap-2">
-                        <TooltipWrapper body="Edit">
-                          <span className="text-xs  rounded-full hover:cursor-pointer p-2">
-                            <Pencil />
-                          </span>
-                        </TooltipWrapper>
-
-                        <TooltipWrapper body="Delete">
-                          <span
-                            onClick={() => {
-                              toggleModal();
-                              setDeleteShareEntryId(entry.id);
-                            }}
-                            className="text-xs  rounded-full hover:cursor-pointer p-2"
-                          >
-                            <Trash2 />
-                          </span>
-                        </TooltipWrapper>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+                            <TooltipWrapper body="Delete">
+                              <span
+                                onClick={() => {
+                                  toggleModal();
+                                  setDeleteShareEntryId(entry.id);
+                                }}
+                                className="text-xs  rounded-full hover:cursor-pointer p-2"
+                              >
+                                <Trash2 />
+                              </span>
+                            </TooltipWrapper>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
       <Modal
@@ -234,7 +243,9 @@ export function AccountHolders({
             disabled={isDeletePending}
             onClick={() => {
               setStartTransition(async () => {
-                await deleteAccountHolder(deleteShareEntryId);
+                deleteMutation.mutateAsync({ id: deleteShareEntryId });
+
+                toast.success("Account holder deleted successfully");
                 setDeleteShareModal(false);
               });
             }}

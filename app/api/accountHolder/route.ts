@@ -1,4 +1,6 @@
 import { addAccountHolder } from "@/action/accountHolder/add-account-holder";
+import { deleteAccountHolder } from "@/action/accountHolder/delete-account-holder";
+import { getAccountHolders } from "@/action/accountHolder/get-account-holders";
 // import { updateSharesWithAllottedIPOs } from "@/action/share/updateUserShareData";
 import { NextResponse } from "next/server";
 
@@ -24,3 +26,13 @@ export async function POST(req: Request) {
 //     return new NextResponse("Internal Server Error", { status: 500 });
 //   }
 // }
+
+export async function GET(req: Request) {
+  try {
+    const result = await getAccountHolders();
+    return NextResponse.json(result);
+  } catch (error) {
+    console.log(error);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}
