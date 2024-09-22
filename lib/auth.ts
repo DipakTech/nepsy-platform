@@ -26,7 +26,7 @@ export const authOptions: AuthOptions = {
   // @ts-ignore
   adapter: PrismaAdapter(prisma),
   providers: [Github, Google],
-  debug: true,
+  debug: false,
   session: {
     strategy: "jwt",
   },
