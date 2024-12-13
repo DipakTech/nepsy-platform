@@ -146,7 +146,7 @@ export function Footer() {
             © 2024 Dipak. All Rights Reserved.
           </div>
           <div className="flex items-center space-x-2 z-30">
-            <span className="text-sm text-gray-600 dark:text-gray-400">
+            <span className="text-sm text-gray-800 dark:text-gray-300">
               Crafted with ❤️ by Dipak Giri
             </span>
           </div>

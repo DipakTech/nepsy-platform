@@ -19,7 +19,6 @@ export const metadata = {
 const Home = async () => {
   return (
     <main className="flex min-h-screen flex-col overflow-hidden">
-      {/* <Button onClick={() => addShareEntry()}>Add</Button> */}
       <div className="w-screen h-auto overflow-hidden ">
         {/* <GridPattern numSquares={5} maxOpacity={0.1} /> */}
       </div>
